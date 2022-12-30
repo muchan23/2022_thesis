@@ -11,9 +11,9 @@ var trueColor = {
 };
  
 //イメージコレクションの中から対象となるイメージを取得
-var imageObject = ee.ImageCollection('LANDSAT/LC08/C01/T1_TOA')   //画像を指定
-                  .filterDate('2020-06-01', '2020-08-31') //期間でフィルタリング
-                  .filterMetadata('CLOUD_COVER', 'less_than', 2) //なるべく雲の少ない写真を選ぶ
+var imageObject = ee.ImageCollection('LANDSAT/LC08/C01/T1_TOA')   //LANDSAT 8号の画像を指定
+                  .filterDate('2020-07-01', '2020-07-30') //期間でフィルタリング
+                   .filterMetadata('CLOUD_COVER', 'less_than', 2) //なるべく雲の少ない写真を選ぶ
                   .filterBounds(geometry) //gemetryのエリアが含まれる写真を選択
                   .first() //絞り込んだコレクションの中から最初の１枚を取得
                   .visualize(trueColor) //レンダリング設定を渡す
@@ -25,7 +25,7 @@ Map.addLayer(imageObject ,null, 'True Color');
 //イメージをGoogleドライブに出力する
 Export.image.toDrive({
   image: imageObject,
-  description: 'sarimage',
+  description: 'image',
   scale: 30,
   region: geometry
 });
